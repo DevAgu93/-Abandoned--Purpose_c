@@ -4,7 +4,7 @@ My first big project that started as a follow through with the Handmade hero ser
 
 You will find a lot of code for things like:
 
-· Png decoder and encoder (incomplete) (purpose_png.c).
+· Png decoder and encoder (incomplete) (agu_png.c/h).
 
 · Bmp decoder and decoder with only the lastest version (alpha supported).
 
@@ -17,5 +17,7 @@ You will find a lot of code for things like:
 · Some stuff that Casey introduces like memory arenas.
 
 · An immediate mode ui inspired by Ryan Fleury's articles (https://www.rfleury.com/p/ui-part-1-the-interaction-medium). in purpose_ui.h/h.
+
+· "Random" number generator with noise (agu_random.h).
 
 The list is incomplete, but I plan to complete as much as I can since someone might some stuff useful. I hope the file names are enough help in the meantime.
