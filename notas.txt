@@ -1,0 +1,79 @@
+==Formato==
+14/1/2023
+
+El formato actual funcional del siguiente modo: cada "línea" representa una especie de sección donde
+se puede insertar cada tipo de dato, como por ejemplo un array, y no hay límite de cuanto puede
+ponerse dentro de cada uno del mismo.
+Facilíta mucho el poder transformarlo pero no es demaciado bueno del todo... si yo quiero transformar
+una parte específica en una sección, primero tengo que ir a la línea y avanzar el tamaño requerido.
+
+ej:
+wr_put_line(&wr)
+{
+	line_to_names = wr.current_line;
+	save_array(&wr, array0);
+	save_array(&wr, array1);
+}
+//aca de alguna forma tengo que ir al array1 si quiero cambiarlo de algún modo, por lo que tengo
+//que incluir una especie de conteo.
+
+Ademas, para "editores" donde simplemente quiero ver todo lo que guardé, no es fácil del todo
+poder leerlo de forma "raw" utilizando este formato... (¿que hay en una línea?)
+
+Para solucionarlo, podría las "lineas" en secciones y utilizar lineas en cada sección para referirme
+a un tipo de dato
+
+typedef struct{
+		u16 number;
+		b16 end;
+		u32 offset;
+		u32 next_section_offset;
+		u32 prev_section_offset;
+		u32 reserved[10];
+}ppse_section;
+
+typedef struct{
+	//number in section
+	u16 number;
+	u16 global_number;
+	//can be included optionally
+	u16 name_length;
+	//size of data structure saved
+	u16 size;
+	//used in the editor
+	u16 data_structure;
+	//if this is true, count will be used
+	b8 is_array;
+	u16 array_count;
+}ppse_line;
+
+Por lo que cada vez que ser llame a wr_put_size(), una nueva línea se pondra como cabezera con el fin
+de saber que hay algo en ella:
+
+	typedef struct{
+		u32 u;
+		f32 f;
+	}example_s;
+
+editor_wr_put_section(&wr)
+{
+	editor_wr_put_struct(&wr, example_s);
+	editor_wr_put_struct(&wr, example_s);
+}
+se ve como:
+
+seccion
+{
+	línea(datos): example_s
+	línea(datos): example_s
+}
+//en un editor
+seccion (no se edita)
+{
+	linea(name:[] data_structure[example_s]: is_array[x] array_count[])
+	{
+		//por cada estructura de datos...
+		u32 u:[]
+		f32 f:[]
+	}
+}

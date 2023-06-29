@@ -1,0 +1,51 @@
+``` 
+//trying to run at 60 fps 
+f32 target_ms = 1.0f / 60.0f;
+//last_performance_counter is initialized outside the loop
+
+//get performance counter and frecuency
+LARGE_INTEGER performance_counter;
+QueryPerformanceCounter(&performance_counter);
+
+LARGE_INTEGER performance_frequency;
+QueryPerformanceFrequency(&performance_frequency);
+
+f32 end_target_ms = (f32)(performance_counter.QuadPart - last_performance_counter) / (f32)performance_frequency.QuadPart;
+if(end_target_ms < target_ms)
+{
+	//1.========ADDED THIS==========
+	f32 tms = target_ms / 1.0f;
+	f32 ms_elapsed = (1000 * (tms - end_target_ms));
+	//===========================
+	i64 sleep_time = (i64)(-ms_elapsed * 10000);
+
+	HANDLE waitable_timer =  CreateWaitableTimerEx(
+			0,	0, CREATE_WAITABLE_TIMER_HIGH_RESOLUTION, TIMER_ALL_ACCESS);
+
+	LARGE_INTEGER timer = {0};
+	timer.QuadPart = sleep_time;//(-target_ms * 100000 * 100);
+	if(!SetWaitableTimer(waitable_timer, &timer, 0, 0, 0, 0))
+	{
+		Assert(0);
+	}
+	WaitForSingleObject(waitable_timer, INFINITE);
+
+
+	//2.========ADDED THIS==========
+	QueryPerformanceCounter(&performance_counter);
+	end_target_ms = (f32)(performance_counter.QuadPart - last_performance_counter) / (f32)performance_frequency.QuadPart;
+	while(end_target_ms < target_ms)
+	{
+		QueryPerformanceCounter(&performance_counter);
+		end_target_ms = (f32)(performance_counter.QuadPart - last_performance_counter) / (f32)performance_frequency.QuadPart;
+	}
+	//===========================
+}
+u64 end_counter = win32_get_performance_counter();
+LARGE_INTEGER lend_counter;
+QueryPerformanceCounter(&lend_counter);
+
+//calculate miliseconds, fps...
+
+last_performance_counter = lend_counter.QuadPart;
+```

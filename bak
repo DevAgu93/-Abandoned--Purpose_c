@@ -1,0 +1,224 @@
+
+static void
+model_animation_animate_model_new(
+		game_renderer *game_renderer,
+		struct s_model model,
+		               model_pose animated_pose,
+					   model_animation *animation,
+					   f32 totalTimer,
+					   u32 run,
+					   vec2 view_direction,
+					   f32 dt)
+{
+
+	model_animation_keyframe *keyframe_array = model.keyframes;
+	model_animation_keyframe *frame_keyframe_array = model.frame_keyframes;
+	model_pose bind_pose = model.pose;
+
+	u32 bone_count = model.bone_count;
+	u32 sprite_count = model.sprite_count;
+
+	u32 runAnimations = run && bone_count;
+	u32 frame_list_count = model.frame_list_count;
+
+	//u32 bone_count = loaded_model->bone_count;
+	//model *model     = &loaded_model->model;
+	//model *bindModel = &loaded_model;
+
+	//Reset to bind model
+	for(u32 b = 0; b < sprite_count; b++)
+	{
+		animated_pose.sprites[b] = bind_pose.sprites[b];
+	}
+	for(u32 b = 0; b < bone_count; b++)
+	{
+		animated_pose.bones[b] = bind_pose.bones[b];
+	}
+
+		
+    if(runAnimations)
+	{
+		if(animation->frame_timer)
+		{
+			f32 f_frame_repeat = 0.1f / animation->frame_timer_repeat;
+			totalTimer = (f32)(i32)(totalTimer / f_frame_repeat) * f_frame_repeat;
+		}
+
+		u32 k  = 0;
+		u32 at = animation->keyframes_at;
+		//transform keyframes
+
+		while(k < animation->keyframe_count)
+		{
+			u32 index0 = k ? k - 1 : 0;
+			u32 index1 = k;
+			model_animation_keyframe *kf0 = keyframe_array + at + index0;
+			model_animation_keyframe *kf1 = keyframe_array + at + index1;
+			model_animation_keyframe bkf = {0};
+			bkf.bone_index = kf1->bone_index;
+			bkf.q.w = 1;
+			b32 new_group = !k || kf0->bone_index != kf1->bone_index;
+			kf0 = new_group ? 
+				&bkf : kf0;
+
+			u32 frame_at = (u32)(totalTimer * 10.0f);
+			//total duration of this key frame
+			u32 frame_start0 = new_group ? 0 : kf0->frame_start;
+			f32 time_start = new_group ? 0.0f : 0.1f * kf0->frame_start;
+			u32 timer_frame_repeat = kf1->timer_frame_repeat;
+			f32 time_total = 
+				0.1f * (kf1->frame_start - frame_start0);
+			//Assert(time_total >= 0);
+			f32 time_at    = totalTimer - time_start;
+			time_at = time_at < 0 ? 0 : 
+				!new_group && time_at > time_total ? time_total : time_at;
+
+
+			b32 valid_index = kf1->bone_index < bone_count;
+			if(valid_index && time_total >= 0)
+			{
+				if(kf1->timer_frame)
+				{
+					f32 total_frames_t = time_total / timer_frame_repeat;
+					time_at = (f32)((i32)(time_at / total_frames_t)) * total_frames_t;
+				}
+				//Result used for spline operations
+				//pick pointing bone
+				//model_sprite *spriteBone = model.sprites + keyframe->bone_index;
+				model_bone *target_bone = animated_pose.bones + kf1->bone_index;
+				model_bone *bind_bone = bind_pose.bones + kf1->bone_index;
+				//
+				if(kf1->switch_parent && time_at < time_total)
+				{
+					target_bone->parent = kf1->parent_index;
+				}
+
+				//u16 start u16 end
+				f32 deltaTime2 = !time_total ? 1 : (f32)(time_at) / (time_total);
+				switch(kf1->spline)
+				{
+
+					case model_animation_spline_near:
+						{
+							//boolean result to f32
+							f32 time_start1 = new_group ? 0.0f : 0.1f * kf1->frame_start;
+							deltaTime2 = (f32)(totalTimer >= time_start1);
+						}break;
+					case model_animation_spline_linear:
+						{
+							deltaTime2 = (f32)(u32)(deltaTime2 * 10.0f);
+							deltaTime2 *= 0.1f;
+						}break;
+					case model_animation_spline_smoothin:
+						{
+							deltaTime2 *= deltaTime2;
+						}break;
+					case model_animation_spline_smoothout:
+						{
+							deltaTime2 = 1.0f - ((1.0f - deltaTime2) * (1.0f - deltaTime2));
+						}break;
+					default:
+						{
+							deltaTime2 = 1;
+						}break;
+
+				}
+				//     deltaTime2 *= deltaTime2; 
+
+
+				f32 displacementX = kf1->offset.x;
+				f32 displacementY = kf1->offset.y;
+				f32 displacementZ = kf1->offset.z;
+
+				//target_bone->displacement.x = f32_lerp(target_bone->displacement.x, deltaTime2, displacementX);
+				//target_bone->displacement.y = f32_lerp(target_bone->displacement.y, deltaTime2, displacementY);
+				//target_bone->displacement.z = f32_lerp(target_bone->displacement.z, deltaTime2, displacementZ);
+
+				//target_bone->rotation_x = f32_lerp(target_bone->rotation_x, deltaTime2, kf0->rotation_x);
+				//target_bone->rotation_y = f32_lerp(target_bone->rotation_y, deltaTime2, kf0->rotation_y);
+				//target_bone->rotation_z = f32_lerp(target_bone->rotation_z, deltaTime2, kf0->rotation_z);
+			//	target_bone->q = quaternion_nlerp(target_bone->q, kf1->q, deltaTime2);
+				deltaTime2 = deltaTime2 > 1.0f ? 1.0f : deltaTime2;
+				if(totalTimer >= time_start)
+				{
+					f32 dx = f32_lerp(kf0->offset.x, deltaTime2, kf1->offset.x);
+					f32 dy = f32_lerp(kf0->offset.y, deltaTime2, kf1->offset.y);
+					f32 dz = f32_lerp(kf0->offset.z, deltaTime2, kf1->offset.z);
+
+					//target_bone->displacement.x = f32_lerp(bind_bone->displacement.x, deltaTime2, dx);
+					//target_bone->displacement.y = f32_lerp(bind_bone->displacement.y, deltaTime2, dy);
+					//target_bone->displacement.z = f32_lerp(bind_bone->displacement.z, deltaTime2, dz);
+//					target_bone->displacement.x = bind_bone->displacement.x + dx;
+//					target_bone->displacement.y = bind_bone->displacement.y + dy;
+//					target_bone->displacement.z = bind_bone->displacement.z + dz;
+					f32 rx = f32_lerp(kf0->rotation_x, deltaTime2, kf1->rotation_x);
+					f32 ry = f32_lerp(kf0->rotation_y, deltaTime2, kf1->rotation_y);
+					f32 rz = f32_lerp(kf0->rotation_z, deltaTime2, kf1->rotation_z);
+
+					f32 px = f32_lerp(kf0->position.x, deltaTime2, kf1->position.x);
+					f32 py = f32_lerp(kf0->position.y, deltaTime2, kf1->position.y);
+					f32 pz = f32_lerp(kf0->position.z, deltaTime2, kf1->position.z);
+
+					target_bone->p.x = bind_bone->p.x + dx;
+					target_bone->p.y = bind_bone->p.y + dy;
+					target_bone->p.z = bind_bone->p.z + dz;
+					target_bone->rotation_x = bind_bone->rotation_x + rx;
+					target_bone->rotation_y = bind_bone->rotation_y + ry;
+					target_bone->rotation_z = bind_bone->rotation_z + rz;
+
+					quaternion qr = quaternion_nlerp(kf0->q, kf1->q, deltaTime2);
+					target_bone->q = quaternion_mul(bind_bone->q, qr);
+				}
+			}
+			k++;
+		}
+		//frame keyframes
+		k = 0;
+		while(k < animation->frame_keyframe_count)
+		{
+			u32 index0 = animation->frame_keyframes_at + k;
+			model_animation_keyframe *kf0 = frame_keyframe_array + index0;
+
+			//total duration of this key frame
+			f32 time_start = 0.1f * kf0->frame_start;
+
+			b32 valid_index = kf0->mesh_index < sprite_count;
+			if(valid_index && totalTimer >= time_start)
+			{
+				if(kf0->frame_list_index < frame_list_count)
+				{
+					model_sprite *sprite = animated_pose.sprites + kf0->mesh_index;
+					sprite->frame_list_index = kf0->frame_list_index;
+					sprite->frame_list_frame_index = kf0->frame_list_frame_index;
+				}
+			}
+			k++;
+		}
+	}
+
+	//transform bones
+
+	//for(u32 b = 0; b < bone_count; b++)
+	//{
+	//	model_bone *bone = animated_pose.bones + b;
+	//	sprite_model_transform bone_transform = 
+	//		model_get_foward_transform_quaternion(
+	//				animated_pose.bones,
+	//				b,
+	//				0);
+
+	//	bone->transformed_p = bone_transform.p;
+	//	bone->q = quaternion_mul(bone->q, bone_transform.q);
+
+	//	bone->transformed_displacement_x = bone_transform.displacement.x;
+	//	bone->transformed_displacement_y = bone_transform.displacement.y;
+	//	bone->transformed_displacement_z = bone_transform.displacement.z;
+
+	//}
+
+	model_fill_bone_transformed_data(
+			game_renderer,
+			animated_pose,
+			bone_count,
+			view_direction);
+}

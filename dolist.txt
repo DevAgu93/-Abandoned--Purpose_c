@@ -1,0 +1,80 @@
+Save model format (x)
+Load model format (x)
+Load model in-game (x)
+Add spawn points to map (x)
+Update camera after entity update ()
+Add do/undo to:
+-map editor ()
+-model editor ()
+-tileset editor ()
+
+Introduce entity editor ()
+Introduce map variables (x)
+Cache loaded maps ()
+for cached maps, use memory headers to store its arrays
+Work on some gameplay ()
+{
+    state machine? (-)
+	more state transitions (-)
+	pre-define state switches. useful when you want to share the same "switches" (like when getting hitted)
+	combos ()
+	signals/communications () (animation finished, "target" or "entity" detected...)
+	switch states ()
+}
+hurtboxes ()
+-Entidades tienen datos como posición, hitbox, hurtbox, datos de físicas. Un "Cerebro" representando su máquina de estados.
+-Something attacks
+-Spawns hurtbox in a specified way
+-Hurtbox contains: spawner (reference, handle, id), stats, attack time, disappear on attack,
+attacks before disappearing, bounces, shape...
+-Hurtbox detects another entity and saves that data.
+
+-"Entities" need to separate some of their data.
+
+definir datos de ataduras a modelos ()
+-Nota: los modelos cargados por individual deben tener una pose en la memoria UNA VEZ.
+
+find the best size for character sprites (x)
+Make some animations, add new actions to action lines
+save total orientations on models
+
+Save tileset walls (x)
+Better scroll (x)
+New map format (x)
+Test tiles (x)
+Better sprite editing (x)
+Simulate an entity on the entity editor ()
+Specify collidable/s for it ()
+Simulate the entity states ()
+Pick arbitrary states on the state editor ()
+
+new tileset idea:
+"tileset terrains" store the capacity it will use and only
+one uvs group (or frame).
+The capacity determines the amount of frames and a w and h parameter
+in order to select a "frame" on it.
+for example a tile with a capacity of 16 contains a width of 6 and height of 3,
+	so frame 8 of that tile would be
+	x = 8 % width;
+	y = 8 / height;
+Shapes can also be specified, which means how the shape of the tiles would change depending
+on their bit values.
+walls would be divided on horizontal, vertical capacity and can
+include optional ground tiles
+horizontal capacity means how many frames from the start it would advance for every adyacent tile
+vertical capacity means how many frames goes down, and if it repeats or not.
+
+editor:
+-create frame animations file ()
+
+world editor:
+-create planes (x)
+-save planes (x)
+-select multiple frame animations for animated planes ()
+-pick an arbitrary tile for selecting said animations or-
+let the program choose randomly ()
+
+
+"Skins" for models
+Animate attached models.
+Attachment data for model

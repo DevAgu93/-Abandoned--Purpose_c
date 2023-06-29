@@ -1,0 +1,36 @@
+{432, 0, 5, 8}
+{0.84, 0}{0.85, 0.015}
+
+uvs
+0 {0.84, 0.0151}
+1 {0.84, 0.0}
+2 {0.85, 0}
+3 {0.85, 0.0151}
+
+v0 {2, 10}
+v1 {2, 2}
+v2 {7, 2}
+v3 {7, 10}
+
+=2d
+v0 {-0.98, 0.875}
+v1 {-0.98, 0.97}
+v2 {-0.94, 0.975}
+v3 {-0.941, 0.875}
+
+So this year I'm finally going to start university, and of course since I like programming I chose a career where I might use some of my current knowledge and learn something new.
+After finishing the introduction to the university, the teacher started to talk about the future subject they'll teach us.
+
+"If you know how to program then forget EVERYTHING you know, because on this first subject you will have to strictly subdivide a lot of stuff
+in little parts, and write long comments explaining whatever the thing does". Huh, well I sometimes like to move some stuff on little functions
+and maybe leave a little comment explaining what it does, but I don't like leaving long commends, even less on little functions.
+
+"You will also learn about the very low level parts of computer hardware and programming in this other subject called". This is the part that interests me the most, so I feel a bit excited about it.
+
+"Also this means you will have to learn Haskell and C++, and C++ is a... well.." (proceeds to explain how you can accidentally write or read something from outside the bounds of an array). It's the first
+time I hear someone outside of the internet saying how languages like c++ were bad because of how "insecure" was for them. I can't say much about the rest of what it has since I only used C after switching
+from C#.
+
+And the rest was about the next subjects that I will most likely "use on todays industry" like OOP and functional programming.
+And that's all, just wanted to share that. I feel like it's going to have some interesting parts at least, but I don't want to be very judgemental and let the experience talk.
+

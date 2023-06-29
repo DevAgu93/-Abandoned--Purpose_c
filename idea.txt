@@ -1,0 +1,5 @@
+bones = nodes
+
+Nodes->sprites
+
+sprite->skins

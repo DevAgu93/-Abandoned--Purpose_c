@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "Game", "bin\Game.exe", "{FA71057A-2311-4DAD-B56C-2A24F275B99D}"
+	ProjectSection(DebuggerProjectSystem) = preProject
+		PortSupplier = 00000000-0000-0000-0000-000000000000
+		Executable = C:\Dev\purpose_c\bin\Game.exe
+		RemoteMachine = DESKTOP-181T748
+		StartingDirectory = C:\Dev\purpose_c\bin
+		Environment = Default
+		LaunchingEngine = 00000000-0000-0000-0000-000000000000
+		UseLegacyDebugEngines = No
+		LaunchSQLEngine = No
+		AttachLaunchAction = No
+		IORedirection = Auto
+	EndProjectSection
+EndProject
+Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "purpose_e", "..\bin\purpose_e.exe", "{570D562C-C5E7-42D5-B58D-02AFCFC65A6D}"
+	ProjectSection(DebuggerProjectSystem) = preProject
+		PortSupplier = 00000000-0000-0000-0000-000000000000
+		Executable = C:\Dev\purpose_c\bin\purpose_e.exe
+		RemoteMachine = DESKTOP-181T748
+		StartingDirectory = C:\Dev\purpose_c\bin
+		Environment = Default
+		LaunchingEngine = 00000000-0000-0000-0000-000000000000
+		UseLegacyDebugEngines = No
+		LaunchSQLEngine = No
+		AttachLaunchAction = No
+		IORedirection = Auto
+	EndProjectSection
+EndProject
+Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "ab", "..\bin\asset_builder\ab.exe", "{F6987D7F-F193-49BD-8B05-009D7EF03071}"
+	ProjectSection(DebuggerProjectSystem) = preProject
+		PortSupplier = 00000000-0000-0000-0000-000000000000
+		Executable = C:\Dev\purpose_c\bin\asset_builder\ab.exe
+		RemoteMachine = DESKTOP-181T748
+		StartingDirectory = C:\Dev\purpose_c\bin\asset_builder
+		Arguments = importedresources ..\imported_resources.prdt
+		Environment = Default
+		LaunchingEngine = 00000000-0000-0000-0000-000000000000
+		UseLegacyDebugEngines = No
+		LaunchSQLEngine = No
+		AttachLaunchAction = No
+		IORedirection = Auto
+	EndProjectSection
+EndProject
+Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "devexp", "..\devexp\devexp.exe", "{2E21A1BB-1FEF-4311-80F4-E8E66FEF9DBE}"
+	ProjectSection(DebuggerProjectSystem) = preProject
+		PortSupplier = 00000000-0000-0000-0000-000000000000
+		Executable = C:\Dev\purpose_c\devexp\devexp.exe
+		RemoteMachine = DESKTOP-181T748
+		StartingDirectory = C:\Dev\purpose_c\devexp
+		Environment = Default
+		LaunchingEngine = 00000000-0000-0000-0000-000000000000
+		UseLegacyDebugEngines = No
+		LaunchSQLEngine = No
+		AttachLaunchAction = No
+		IORedirection = Auto
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA71057A-2311-4DAD-B56C-2A24F275B99D}.Release|x64.ActiveCfg = Release|x64
+		{570D562C-C5E7-42D5-B58D-02AFCFC65A6D}.Release|x64.ActiveCfg = Release|x64
+		{F6987D7F-F193-49BD-8B05-009D7EF03071}.Release|x64.ActiveCfg = Release|x64
+		{2E21A1BB-1FEF-4311-80F4-E8E66FEF9DBE}.Release|x64.ActiveCfg = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {800F21F4-FBC6-4426-85FC-7F144B22052D}
+	EndGlobalSection
+EndGlobal
