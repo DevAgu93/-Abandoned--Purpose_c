@@ -20,4 +20,6 @@ You will find a lot of code for things like:
 
 · "Random" number generator with noise (agu_random.h).
 
+· The code I used by following Handmade Ray (also here https://guide.handmadehero.org/)
+
 The list is incomplete, but I plan to complete as much as I can since someone might some stuff useful. I hope the file names are enough help in the meantime.
