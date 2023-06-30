@@ -1,0 +1,77 @@
+﻿using Microsoft.Xna.Framework;
+using System;
+
+namespace Purpose
+{
+    public static class MioMath
+    {
+        public static float GetRadius(in Vector2 CalculatedVec)
+        {
+            return (CalculatedVec.X * CalculatedVec.X) + (CalculatedVec.Y * CalculatedVec.Y);
+        }
+        public static float GetRadius(in Vector3 pointOne, in Vector3 pointTwo)
+        {
+            return ((pointOne.X - pointTwo.X) * (pointOne.X - pointTwo.X)) +
+                   ((pointOne.Y - pointTwo.Y) * (pointOne.Y - pointTwo.Y));
+        }
+        public static float GetRadius(in float p1x, in float p1y, in float p2x, in float p2y)
+        {
+            return ((p1x - p2x) * (p1x - p2x)) +
+                   ((p1y - p2y) * (p1y - p2y));
+        }
+        public static bool DetectAABB(in Vector3 point, in Rectangle Rectangle)
+        {
+            return point.X < Rectangle.X + Rectangle.Width && point.X > Rectangle.X &&
+                   point.Y < Rectangle.Y + Rectangle.Height && point.Y > Rectangle.Y;
+        }
+        public static bool DetectAABB(in Vector2 VecOne, in Vector2 VecTwo, in Rectangle RecOne, in Rectangle RecTwo)
+        {
+            return VecOne.X + RecOne.Width > VecTwo.X && VecOne.X < VecTwo.X + RecTwo.Width &&
+                   VecOne.Y + RecOne.Height > VecTwo.Y && VecOne.Y < VecTwo.Y + RecTwo.Height;
+        }
+        public static void CheapNormal(ref float X, ref float Y, in int range)
+        {
+            X = (int)X / range;
+            Y = (int)Y / range;
+        }
+        public static Vector3 GetUnit(int X, int Y)
+        {
+            X /= X == 0 ? 1 : Math.Abs(X);
+            Y /= Y == 0 ? 1 : Math.Abs(Y);
+            return new Vector3(X, Y, 0);
+        }
+        public static Vector3 GetUnit(ref float X, ref float Y)
+        {
+            X /= X == 0 ? 1 : Math.Abs(X);
+            Y /= Y == 0 ? 1 : Math.Abs(Y);
+            return new Vector3(X, Y, 0);
+        }
+        public static Vector3 GetUnit(ref float X, ref float Y, ref float Z)
+        {
+            X /= X == 0 ? 1 : Math.Abs(X);
+            Y /= Y == 0 ? 1 : Math.Abs(Y);
+            Z /= Z == 0 ? 1 : Math.Abs(Z);
+            return new Vector3(X, Y, Z);
+        }
+        public static void GetUnit(this ref Vector3 Vec)
+        {
+            Vec.X /= Vec.X == 0 ? 1 : Math.Abs(Vec.X);
+            Vec.Y /= Vec.Y == 0 ? 1 : Math.Abs(Vec.Y);
+            Vec.Z /= Vec.Z == 0 ? 1 : Math.Abs(Vec.Z);
+        }
+        public static void GetUnitXY(this ref Vector3 Vec)
+        {
+            Vec.X /= Vec.X == 0 ? 1 : Math.Abs(Vec.X);
+            Vec.Y /= Vec.Y == 0 ? 1 : Math.Abs(Vec.Y);
+        }
+        public static float Interpolate(in float x0,in float x1,in float alpha)
+        {
+            return x0 * (1 - alpha) +
+                    alpha * x1;
+        }
+        public static void LimitTo(in float limit, ref float value)
+        {
+            value = value < -limit ? -limit : value > limit ? limit : value;
+        }
+    }
+}

@@ -1,0 +1,194 @@
+﻿using System;
+using System.Security.Cryptography;
+
+namespace Purpose
+{
+    public static class MioNumeros
+    {
+//        static readonly float[] SmoothNoise = new float[] {0.8650596f,
+//0.49469495f, 0.12433028f, 0.12014653f, 0.11596277f, 0.51183987f, 0.907717f, 0.52457076f, 0.14142457f, 0.41001523f, 0.6786059f, 0.3947197f, 0.11083347f, 0.07225469f, 0.033675894f, 0.087361954f, 0.14104801f, 0.23025241f, 0.31945682f, 0.5922582f, 0.5551515f,
+//0.5405882f, 0.5260249f, 0.37567496f, 0.22532506f, 0.47422165f, 0.72311825f, 0.5151868f, 0.30725533f, 0.47005963f, 0.632864f, 0.5499034f, 0.46694276f, 0.28954607f, 0.112149365f, 0.1388538f, 0.16555823f, 0.3517794f, 0.5380006f, 0.546576f, 0.24524345f,
+//0.58648145f, 0.9277195f, 0.6312034f, 0.33468735f, 0.43660343f, 0.5385195f, 0.50580275f, 0.47308606f, 0.53010404f, 0.587122f, 0.70508707f, 0.82305205f, 0.5068374f, 0.19062284f, 0.19034564f, 0.19006845f, 0.47330636f, 0.7565443f, 0.5008939f, 0.21866754f,
+//0.5410258f, 0.8633841f, 0.54750454f, 0.23162504f, 0.3704998f, 0.50937456f, 0.6216101f, 0.73384565f, 0.5747778f, 0.4157099f, 0.62534887f, 0.83498776f, 0.5417509f, 0.248514f, 0.1777362f, 0.10695839f, 0.46850336f, 0.8300484f, 0.524358f, 0.19209164f,
+//0.4955702f, 0.7990488f, 0.46380574f, 0.12856272f, 0.30439615f, 0.48022962f, 0.73741746f, 0.99460524f, 0.6194515f, 0.24429779f, 0.54561067f, 0.84692353f, 0.5766643f, 0.30640516f, 0.16512674f, 0.023848323f, 0.46370038f, 0.9035525f, 0.54782206f, 0.54359317f,
+//0.7043088f, 0.86502445f, 0.5534059f, 0.2417873f, 0.4136152f, 0.58544314f, 0.72409594f, 0.8627487f, 0.57308686f, 0.283425f, 0.36068285f, 0.43794066f, 0.48821473f, 0.5384888f, 0.27566522f, 0.012841649f, 0.3240959f, 0.63535017f, 0.5894717f, 0.89509463f,
+//0.91304743f, 0.9310002f, 0.643006f, 0.35501188f, 0.52283424f, 0.6906566f, 0.71077436f, 0.7308921f, 0.5267222f, 0.32255223f, 0.17575502f, 0.028957812f, 0.39976513f, 0.7705725f, 0.38620374f, 0.0018349751f, 0.18449143f, 0.36714786f, 0.6311213f, 0.62698996f,
+//0.5599607f, 0.49293146f, 0.4656362f, 0.43834096f, 0.44898474f, 0.4596285f, 0.5524276f, 0.6452267f, 0.43185484f, 0.21848303f, 0.24217647f, 0.26586992f, 0.51896477f, 0.7720597f, 0.5047279f, 0.2373961f, 0.28726375f, 0.33713135f, 0.48206067f, 0.35888523f,
+//0.20687398f, 0.054862723f, 0.2882664f, 0.52167004f, 0.3751352f, 0.22860037f, 0.39408082f, 0.55956125f, 0.33698753f, 0.11441381f, 0.30859792f, 0.50278205f, 0.63816446f, 0.7735469f, 0.62325203f, 0.47295722f, 0.39003605f, 0.30711484f, 0.33300003f, 0.5585122f,
+//0.53227895f, 0.50604564f, 0.402376f, 0.2987063f, 0.3692873f, 0.43986836f, 0.5556488f, 0.6714293f, 0.45148605f, 0.23154277f, 0.47503412f, 0.7185254f, 0.6308714f, 0.5432174f, 0.54605246f, 0.54888743f, 0.5591738f, 0.5694603f, 0.56398624f, 0.75813925f,
+//0.8576839f, 0.95722854f, 0.5164856f, 0.07574255f, 0.36343944f, 0.65113634f, 0.71721685f, 0.78329736f, 0.56598455f, 0.34867173f, 0.6414703f, 0.93426883f, 0.6235784f, 0.312888f, 0.46885282f, 0.62481767f, 0.72831166f, 0.8318057f, 0.7949725f, 0.6378184f,
+//0.73042035f, 0.82302237f, 0.5805148f, 0.33800718f, 0.5383333f, 0.7386594f, 0.71637154f, 0.69408363f, 0.5181893f, 0.34229496f, 0.61898196f, 0.89566886f, 0.5690529f, 0.24243686f, 0.37347245f, 0.5045081f, 0.58537245f, 0.6662369f, 0.6520276f, 0.51749754f,
+//0.60315686f, 0.6888162f, 0.644544f, 0.6002718f, 0.71322715f, 0.8261824f, 0.71552616f, 0.6048699f, 0.47039405f, 0.3359182f, 0.59649354f, 0.8570689f, 0.5145273f, 0.17198572f, 0.27809212f, 0.38419852f, 0.4424333f, 0.5006681f, 0.5090828f, 0.5226388f,
+//0.67856205f, 0.83448523f, 0.6865338f, 0.5385823f, 0.7075902f, 0.8765981f, 0.67923903f, 0.48188004f, 0.3446743f, 0.20746855f, 0.38536468f, 0.5632608f, 0.48002458f, 0.3967883f, 0.4077958f, 0.41880322f, 0.44231027f, 0.46581736f, 0.49422807f, 0.5277801f,
+//0.75396717f, 0.9801543f, 0.72852355f, 0.47689283f, 0.7019533f, 0.92701375f, 0.64295197f, 0.35889018f, 0.21895455f, 0.07901892f, 0.1742358f, 0.2694527f, 0.4455218f, 0.6215909f, 0.5374994f, 0.45340794f, 0.44218728f, 0.43096662f, 0.47937337f, 0.5826777f,
+//0.5475031f, 0.51232857f, 0.5680504f, 0.62377226f, 0.6899506f, 0.75612897f, 0.52566457f, 0.29520014f, 0.2195577f, 0.14391527f, 0.17044874f, 0.1969822f, 0.3724583f, 0.5479344f, 0.5205895f, 0.4932446f, 0.4534055f, 0.41356638f, 0.49812204f, 0.6375754f,
+//0.3410391f, 0.044502802f, 0.40757722f, 0.77065164f, 0.6779479f, 0.5852442f, 0.40837714f, 0.23151012f, 0.22016086f, 0.2088116f, 0.16666166f, 0.124511726f, 0.29939482f, 0.4742779f, 0.5036796f, 0.53308123f, 0.4646237f, 0.39616615f, 0.51687074f, 0.76677626f,
+//0.58762825f, 0.40848026f, 0.47214168f, 0.5358031f, 0.5902647f, 0.64472634f, 0.45662522f, 0.2685241f, 0.33028868f, 0.39205328f, 0.25954366f, 0.12703401f, 0.30907327f, 0.4911125f, 0.48809546f, 0.48507842f, 0.40592575f, 0.3267731f, 0.5467746f, 0.89597714f,
+//0.8342174f, 0.7724577f, 0.53670615f, 0.30095458f, 0.50258154f, 0.7042085f, 0.5048733f, 0.3055381f, 0.4404165f, 0.575295f, 0.35242563f, 0.1295563f, 0.3187517f, 0.5079471f, 0.47251135f, 0.43707561f, 0.3472278f, 0.25738004f, 0.5766786f, 0.8805184f,
+//0.6644562f, 0.448394f, 0.32842633f, 0.20845868f, 0.50721073f, 0.80596274f, 0.514722f, 0.22348133f, 0.42521587f, 0.62695044f, 0.37357265f, 0.12019488f, 0.19550319f, 0.2708115f, 0.27993664f, 0.2890618f, 0.2887401f, 0.2884184f, 0.58446836f, };
+
+//        static readonly uint noiseCap = (uint)SmoothNoise.Length;
+
+        const uint bitN1     = 0x68E31DA4;
+        const uint bitN2     = 0xB5298A4D;
+        const uint bitN3     = 0x1B56C4E9;
+        const float multf = 1f / 27416821;
+
+        public static uint Get1dUintNoise(in int x, in uint seed)
+        {
+            uint bit = (uint)x;
+
+            bit *= bitN1;
+            bit += seed;
+            bit ^= bit >> 8;
+            bit += bitN2;
+            bit ^= bit << 8;
+            bit *= bitN3;
+            bit ^= bit >> 8;
+
+            return bit;
+        }
+        public static float Get1dFloatNoise(in int x, in uint seed)
+        {
+            uint num = Get1dUintNoise(x, seed);
+            float numf = num * multf;
+
+            return numf - (uint)numf;
+        }
+        public static int GetNumberBetween(in int num1, in int num2, in int x, in uint Seed)
+        {
+
+            uint S = Get1dUintNoise(x, Seed);
+
+            float alpha = Get1dFloatNoise(x, S);
+
+            return (int)MathF.Round(Interpolate(num1, num2, alpha));
+        }
+        public static float GetNumberBetween(in float num1, in float num2, in int x, in uint Seed)
+        {
+
+            uint S = Get1dUintNoise(x, Seed);
+
+            float alpha = Get1dFloatNoise(x, S);
+            return Interpolate(num1, num2, alpha);
+        }
+        public static int ChooseNumber(in int x, in uint Seed, params int[] numbers)
+        {
+            int index = GetNumberBetween(0, numbers.Length,x, Seed);
+
+            return numbers[index];
+        }
+        public static float ChooseNumber(in int x, in uint Seed, params float[] numbers)
+        {
+            int index = GetNumberBetween(0, numbers.Length, x, Seed);
+
+            return numbers[index];
+        }
+        public static int Abs(in int num)
+        {
+            int mask = num >> 31;
+            //int end = (mask ^ num) - mask;
+            return (num ^ mask) - mask;
+            //return end;
+        }
+        public static float Interpolate(float x0, float x1, float alpha)
+        {
+            return x0 * (1 - alpha) +
+                    alpha * x1; //if alpha == 1f then x1
+        }
+        public static float Approach(in float current, in float goal, in float dt)
+        {
+            float dif = goal - current;
+
+            if (dif > dt)
+                return current + dt;
+            if (dif < -dt)
+                return current - dt;
+
+            return goal;
+        }
+        public static int To1D(in int x, in int y, in int w, in int h) => (x >= w || y >= h) ? -1 : x + y * w;
+		
+        public static (int, int) To2D(in int i, in int w, in int h)
+        {
+            int x = i % w;
+            int y = i / h;
+
+            if (x >= w || y >= h) return (-1, -1);
+
+            return (x, y);
+        }
+        public static void Clamp(ref float f, in float min, in float max) => f = f < min ? min : f > max ? max : f;
+
+    }
+    public class MioRandom
+    {
+        uint Seed;
+        public MioRandom()
+        {
+            Seed = (uint)RandomNumberGenerator.GetInt32(0, int.MaxValue);
+        }
+        public int GetRandomint(in int Pos, in int Limit = 0)
+        {
+            int returnVal = (int)MioNumeros.Get1dUintNoise(Pos, Seed);
+
+            if (Limit > 0)
+                returnVal %= Limit;
+
+            Seed++;
+            return returnVal;
+        }
+        public int GetRandomNumber(in int Pos, in int Limit = 0)
+        {
+            int returnVal = (int)MioNumeros.Get1dUintNoise(Pos, Seed);
+
+            if (Limit > 0)
+                returnVal %= Limit;
+
+            Seed++;
+            return returnVal;
+        }
+        public float GetRandomNumber(in int Pos, in float Limit = 0)
+        {
+            uint multiplier = MioNumeros.Get1dUintNoise(Pos, Seed);
+            float returnVal = MioNumeros.Get1dFloatNoise(Pos, Seed) + multiplier;
+
+            if (Limit > 0)
+                returnVal %= Limit;
+
+            Seed++;
+            return returnVal;
+        }
+        public int ChooseNumber(params int[] numbers)
+        {
+            Seed++;
+            return MioNumeros.ChooseNumber((int)(Seed + 5), Seed, numbers);
+        }
+        public float ChooseNumber(params float[] numbers)
+        {
+            Seed++;
+            return MioNumeros.ChooseNumber((int)(Seed + 5), Seed, numbers);
+        }
+        public float GetNumberBetween(in float x, in float y)
+        {
+            Seed++;
+            return x >= y ? x : MioNumeros.GetNumberBetween(x,y,(int)(Seed + 5), Seed);
+        }
+        public int GetNumberBetween(in int x, in int y)
+        {
+            Seed++;
+            return x >= y ? x : MioNumeros.GetNumberBetween(x, y, (int)(Seed + 5), Seed);
+        }
+        public uint GetRandomUint(in int Pos, in uint Limit = 0)
+        {
+            uint returnVal = MioNumeros.Get1dUintNoise(Pos, Seed);
+
+            if (Limit > 0)
+                returnVal %= Limit;
+
+            Seed++;
+
+            return returnVal;
+        }
+    }
+}
