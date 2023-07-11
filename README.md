@@ -22,4 +22,12 @@ You will find a lot of code for things like:
 
 · The code I used by following Handmade Ray in the raytrace folder [WARNING] doesn't compile. (also here https://guide.handmadehero.org/)
 
+· Some ray vs shape functions (purpose_ray.h)
+
+· Simple upscale and downscale and line and curve drawing (ddu, bresenham...) with interpolation functions (agu_image.c)
+
+· Functions to convert font atlases to sdf (agu_image.c)
+
+· Incomplete but functional text format (global_all_use.h)
+
 The list is incomplete, but I plan to complete as much as I can since someone might some stuff useful. I hope the file names are enough help in the meantime.
